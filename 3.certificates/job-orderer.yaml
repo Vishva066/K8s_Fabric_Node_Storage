@@ -36,7 +36,7 @@ spec:
               name: fabricfiles
               subPath: organizations
             - mountPath: /scripts
-              name: nfs
+              name: fabricfiles
               subPath: scripts
           command:
             - /bin/sh

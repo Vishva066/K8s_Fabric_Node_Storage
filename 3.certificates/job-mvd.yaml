@@ -18,9 +18,9 @@ spec:
           hostPath:
             path: /mnt/fabric # Directory on the node's filesystem
             type: DirectoryOrCreate
-        - name: scripts
-          persistentVolumeClaim:
-            claimName: mypvc
+        # - name: scripts
+        #   persistentVolumeClaim:
+        #     claimName: mypvc
       containers:
         - name: create-certs
           image: hyperledger/fabric-ca-tools:1.2.1
@@ -36,7 +36,7 @@ spec:
               name: fabricfiles
               subPath: organizations
             - mountPath: /scripts
-              name: scripts
+              name: fabricfiles
               subPath: scripts
           command:
             - /bin/sh
