@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ca-mvd
+spec:
+  selector:
+    matchLabels:
+      app: ca-mvd
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ca-mvd
+    spec:
+      nodeSelector:
+        org3: mvd
+      volumes:
+        - name: data
+          # persistentVolumeClaim:
+          #   claimName: mypvc
+          hostPath:
+            path: /mnt/fabric  # Path on the node's local filesystem
+            type: DirectoryOrCreate
+      containers:
+
+        - name: ca-mvd
+          image: hyperledger/fabric-ca:1.5.7
+          imagePullPolicy: "Always"
+          command:
+            [
+              "fabric-ca-server" ,
+              "start", "-b" ,"admin:adminpw","--port","9054", "-d"
+            ]
+          resources:
+            requests:
+              memory: "300Mi"
+              cpu: "60m"
+            limits:
+              memory: "500Mi"
+              cpu: "100m"
+          env:
+            - name: FABRIC_CA_SERVER_CA_NAME
+              value: ca-mvd
+            - name: FABRIC_CA_SERVER_TLS_ENABLED
+              value: "true"
+            - name: FABRIC_CA_SERVER_CSR_CN
+              value: "ca-mvd"
+            - name: FABRIC_CA_SERVER_CSR_HOSTS
+              value: "ca-mvd"
+          volumeMounts:
+            - name: data
+              mountPath: /etc/hyperledger/fabric-ca-server
+              subPath: organizations/fabric-ca/mvd

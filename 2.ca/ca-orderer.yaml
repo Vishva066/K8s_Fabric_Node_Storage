@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ca-orderer
+spec:
+  selector:
+    matchLabels:
+      app: ca-orderer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ca-orderer
+    spec:
+      nodeSelector:
+        ordering: orderer
+      volumes:
+        - name: data
+          # persistentVolumeClaim:
+          #   claimName: mypvc
+          hostPath:
+            path: /mnt/fabric  # Path on the node's local filesystem
+            type: DirectoryOrCreate
+      containers:
+
+        - name: ca-orderer
+          image: hyperledger/fabric-ca:1.5.7
+          imagePullPolicy: "IfNotPresent"
+          command:
+            [
+              "fabric-ca-server" ,
+              "start", "-b" ,"admin:adminpw","--port","10054", "-d"
+            ]
+          resources:
+            requests:
+              memory: "300Mi"
+              cpu: "200m"
+            limits:
+              memory: "500Mi"
+              cpu: "310m"
+          env:
+            - name: FABRIC_CA_SERVER_CA_NAME
+              value: ca-orderer
+            - name: FABRIC_CA_SERVER_TLS_ENABLED
+              value: "true"
+          volumeMounts:
+            - name: data
+              mountPath: /etc/hyperledger/fabric-ca-server
+              subPath: organizations/fabric-ca/ordererOrg
