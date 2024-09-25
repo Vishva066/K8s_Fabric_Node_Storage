@@ -10,7 +10,7 @@ spec:
       name: create-certs-manu
     spec:
       nodeSelector:
-        org1: manufacuturer
+        org1: manufacturer
       volumes:
         - name: fabricfiles
           # persistentVolumeClaim:
