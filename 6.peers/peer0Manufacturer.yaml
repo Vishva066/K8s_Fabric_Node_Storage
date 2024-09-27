@@ -21,9 +21,9 @@ spec:
           hostPath:
             path: /mnt/fabric  # Path on the node's local filesystem
             type: DirectoryOrCreate
-        - name: docker-socket
-          hostPath:
-            path: /var/run/docker.sock
+        # - name: docker-socket
+        #   hostPath:
+        #     path: /var/run/docker.sock
         - name: builders-config
           configMap:
             name: builders-config
@@ -136,8 +136,8 @@ spec:
             - mountPath: /opt/hyperledger/ccaas_builder/bin/release
               name: external-builder-release
               subPath: release
-            - mountPath: /var/run/docker.sock
-              name: docker-socket
+            # - mountPath: /var/run/docker.sock
+            #   name: docker-socket
             
 
         - name: couchdb
