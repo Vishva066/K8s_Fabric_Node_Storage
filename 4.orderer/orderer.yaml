@@ -16,11 +16,21 @@ spec:
         org0: orderer1
       volumes:
         - name: fabricfiles
-          # persistentVolumeClaim:
-          #   claimName: mypvc
           hostPath:
             path: /mnt/fabric  # Directory on the node's filesystem
             type: DirectoryOrCreate
+        - name: certbackup
+          persistentVolumeClaim:
+            claimName: mypvc
+      initContainers:
+      - name: copy-certificates
+        image: busybox  # A lightweight image for copying files
+        command: ['sh', '-c', 'cp -r /organizations /mnt/nfs/fabricbackup/organizations']
+        volumeMounts:
+          - name: fabricfiles
+            mountPath: /organizations  # Mount the source (host path)
+          - name: nfs-vol
+            mountPath: /mnt/nfs  # Mount the NFS destination
       containers:
         - image: hyperledger/fabric-orderer:2.5.4
           name: orderer

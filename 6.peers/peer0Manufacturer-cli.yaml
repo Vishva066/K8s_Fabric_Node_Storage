@@ -37,7 +37,6 @@ spec:
           env:
             - name: ORDERER_CA
               value: /organizations/ordererOrganizations/auto.com/orderers/orderer.auto.com/msp/tlscacerts/tlsca.auto.com-cert.pem
-
             - name: CORE_PEER_ADDRESS
               value: peer0-manufacturer:7051
             - name: CORE_PEER_ID
