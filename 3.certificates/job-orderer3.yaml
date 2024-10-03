@@ -1,16 +1,16 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: create-certs-orderer2
+  name: create-certs-orderer3
 spec:
   parallelism: 1
   completions: 1
   template:
     metadata:
-      name: create-certs-ord2
+      name: create-certs-ord3
     spec:
       nodeSelector:
-        org0: orderer2
+        org0: orderer3
       volumes:
         - name: fabricfiles
           # persistentVolumeClaim:
@@ -54,5 +54,5 @@ spec:
             - /bin/sh
             - -c
             - |
-              ./scripts/orderer2-certs.sh
+              ./scripts/orderer3-certs.sh
       restartPolicy: Never

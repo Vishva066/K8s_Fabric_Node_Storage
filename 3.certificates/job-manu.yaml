@@ -21,6 +21,18 @@ spec:
         # - name: scripts
         #   persistentVolumeClaim:
         #     claimName: mypvc
+      initContainers:
+        - name: set-permissions
+          image: busybox  # Lightweight image for running commands
+          command:
+            - /bin/sh
+            - -c
+            - |
+              chmod +x /scripts -R  # Ensure the script is executable
+          volumeMounts:
+            - mountPath: /scripts
+              name: fabricfiles
+              subPath: scripts  # Ensure the script is mounted here
       containers:
         - name: create-certs
           image: hyperledger/fabric-ca-tools:1.2.1
