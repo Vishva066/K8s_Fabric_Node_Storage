@@ -10,7 +10,7 @@ spec:
       name: create-certs-ord2
     spec:
       nodeSelector:
-        org0: orderer2
+        org2: dealer
       volumes:
         - name: fabricfiles
           # persistentVolumeClaim:
