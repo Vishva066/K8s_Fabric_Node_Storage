@@ -31,7 +31,7 @@ spec:
         volumeMounts:
           - name: fabricfiles
             mountPath: /organizations  # Mount the source (host path)
-          - name: mypvc
+          - name: certbackup
             mountPath: /fabricbackup  # Mount the NFS destination
       containers:
         - image: hyperledger/fabric-orderer:2.5.4
