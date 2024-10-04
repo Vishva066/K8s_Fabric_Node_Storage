@@ -28,7 +28,7 @@ spec:
             - /bin/sh
             - -c
             - |
-              chmod +x /scripts -R  # Ensure the script is executable
+              chmod +x /scripts -R  
           volumeMounts:
             - mountPath: /scripts
               name: fabricfiles

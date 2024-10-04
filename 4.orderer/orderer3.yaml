@@ -13,7 +13,7 @@ spec:
         name: orderer3
     spec:
       nodeSelector:
-        org0: orderer3
+        org3: mvd 
       volumes:
         - name: fabricfiles
           # persistentVolumeClaim:
