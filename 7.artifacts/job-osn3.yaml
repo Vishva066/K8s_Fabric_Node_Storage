@@ -1,14 +1,14 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: appchannel
+  name: appchannel3
 spec:
   template:
     spec:
       nodeSelector:
-        org1: manufacturer
+        org2: dealer
       containers:
-        - name: appchannel
+        - name: appchannel3
           image: hyperledger/fabric-tools:2.5.4
           workingDir: /
           volumeMounts:
@@ -31,7 +31,7 @@ spec:
             - /bin/bash
             - -c
             - |
-              ./scripts/createAppChannel.sh 
+              ./scripts/createAppChannel_Ord3.sh 
       restartPolicy: Never
       volumes:
         - name: fabricfiles
