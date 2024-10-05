@@ -12,9 +12,9 @@ spec:
           image: hyperledger/fabric-tools:2.5.4
           workingDir: /
           volumeMounts:
-            - mountPath: /fabricbackup/organizations
+            - mountPath: /organizations
               name: certbackup
-              subPath: organizations
+              subPath: /fabricbackup/organizations
             - mountPath: /configtx
               name: fabricfiles
               subPath: configtx
