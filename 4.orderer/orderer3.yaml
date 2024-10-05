@@ -31,8 +31,10 @@ spec:
         volumeMounts:
           - name: fabricfiles
             mountPath: /organizations  # Mount the source (host path)
+            subPath: organizations
           - name: certbackup
             mountPath: /fabricbackup  # Mount the NFS destination
+            subPath: fabricbackup
       containers:
         - image: hyperledger/fabric-orderer:2.5.4
           name: orderer3
