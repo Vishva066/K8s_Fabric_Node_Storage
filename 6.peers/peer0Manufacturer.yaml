@@ -135,6 +135,9 @@ spec:
             - mountPath: /organizations
               name: fabricfiles
               subPath: organizations
+            - name: fabricfiles
+              mountPath: /scripts
+              subPath: scripts
             - mountPath: /var/hyperledger/production
               name: fabricfiles
               subPath: state/manufacturer/peer0
