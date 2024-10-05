@@ -14,7 +14,7 @@ spec:
           volumeMounts:
             - mountPath: /organizations
               name: certbackup
-              subPath: /fabricbackup/organizations
+              subPath: fabricbackup/organizations
             - mountPath: /configtx
               name: fabricfiles
               subPath: configtx
