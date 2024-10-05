@@ -61,8 +61,10 @@ spec:
         volumeMounts:
           - name: fabricfiles
             mountPath: /organizations  # Mount the source (host path)
+            subPath: organizations
           - name: certbackup
             mountPath: /fabricbackup  # Mount the NFS destination
+            subPath: fabricbackup
       containers:
         - name: peer
           image: hyperledger/fabric-peer:2.5.4
