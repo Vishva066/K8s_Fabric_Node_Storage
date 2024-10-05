@@ -12,6 +12,8 @@ spec:
       labels:
         name: peer0-mvd
     spec:
+      nodeSelector:
+        org3: mvd
       volumes:
         - name: fabricfiles
           # persistentVolumeClaim:

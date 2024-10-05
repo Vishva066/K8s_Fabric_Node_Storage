@@ -5,13 +5,15 @@ metadata:
 spec:
   template:
     spec:
+      nodeSelector:
+        org1: manufacturer
       containers:
         - name: artifacts
           image: hyperledger/fabric-tools:2.5.4
           workingDir: /
           volumeMounts:
-            - mountPath: /organizations
-              name: fabricfiles
+            - mountPath: /fabricbackup/organizations
+              name: certbackup
               subPath: organizations
             - mountPath: /configtx
               name: fabricfiles
@@ -19,8 +21,8 @@ spec:
             # - mountPath: /system-genesis-block
             #   name: fabricfiles
             #   subPath: system-genesis-block
-            - mountPath: /channel-artifacts
-              name: fabricfiles
+            - mountPath: /fabricbackup/channel-artifacts
+              name: certbackup
               subPath: channel-artifacts
             - mountPath: /scripts
               name: fabricfiles

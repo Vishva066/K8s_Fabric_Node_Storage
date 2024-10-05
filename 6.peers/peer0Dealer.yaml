@@ -12,6 +12,8 @@ spec:
       labels:
         name: peer0-dealer
     spec:
+      nodeSelector:
+        org2: dealer
       volumes:
         - name: fabricfiles
           # persistentVolumeClaim:
