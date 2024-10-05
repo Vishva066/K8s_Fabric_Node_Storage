@@ -138,6 +138,9 @@ spec:
             - name: fabricfiles
               mountPath: /scripts
               subPath: scripts
+            - mountPath: /channel-artifacts
+              name: certbackup
+              subPath: channel-artifacts
             - mountPath: /var/hyperledger/production
               name: fabricfiles
               subPath: state/manufacturer/peer0
