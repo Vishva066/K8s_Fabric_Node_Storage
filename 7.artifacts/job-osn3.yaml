@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       nodeSelector:
-        org2: dealer
+        org3: mvd
       containers:
         - name: appchannel3
           image: hyperledger/fabric-tools:2.5.4
