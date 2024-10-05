@@ -21,7 +21,7 @@ spec:
             # - mountPath: /system-genesis-block
             #   name: fabricfiles
             #   subPath: system-genesis-block
-            - mountPath: /fabricbackup/channel-artifacts
+            - mountPath: /channel-artifacts
               name: certbackup
               subPath: channel-artifacts
             - mountPath: /scripts
