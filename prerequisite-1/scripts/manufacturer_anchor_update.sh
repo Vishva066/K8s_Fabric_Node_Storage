@@ -1,8 +1,8 @@
 export CHANNEL_NAME=autochannel
-export ORDERER_CA=${PWD}/organizations/ordererOrganizations/auto.com/orderers/orderer.auto.com/msp/tlscacerts/tlsca.auto.com-cert.pem
+export ORDERER_CA=/organizations/ordererOrganizations/auto.com/orderers/orderer.auto.com/msp/tlscacerts/tlsca.auto.com-cert.pem
 
 
-peer channel fetch config ${PWD}/channel-artifacts/config_block.pb -o orderer:7050  -c $CHANNEL_NAME --tls --cafile $ORDERER_CA
+peer channel fetch config /channel-artifacts/config_block.pb -o orderer:7050  -c $CHANNEL_NAME --tls --cafile $ORDERER_CA
 sleep 1
 
 cd channel-artifacts
@@ -24,5 +24,5 @@ configtxlator proto_encode --input config_update_in_envelope.json --type common.
 
 cd ..
 
-peer channel update -f ${PWD}/channel-artifacts/config_update_in_envelope.pb -c $CHANNEL_NAME -o orderer:7050  --tls --cafile $ORDERER_CA
+peer channel update -f /channel-artifacts/config_update_in_envelope.pb -c $CHANNEL_NAME -o orderer:7050  --tls --cafile $ORDERER_CA
 sleep 1
