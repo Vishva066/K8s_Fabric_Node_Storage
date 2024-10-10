@@ -13,7 +13,7 @@ spec:
         app: ca-orderer
     spec:
       nodeSelector:
-        org1: manufacturer
+        node: VM2
       volumes:
         - name: data
           # persistentVolumeClaim:

@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       nodeSelector:
-        org1: manufacturer
+        node: VM3
       containers:
         - name: appchannel
           image: hyperledger/fabric-tools:2.5.4

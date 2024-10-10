@@ -10,7 +10,7 @@ spec:
       name: create-certs-mvd
     spec:
       nodeSelector:
-        org3: mvd
+        node: VM5
       volumes:
         - name: fabricfiles
           # persistentVolumeClaim:
