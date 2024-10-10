@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       nodeSelector:
-        node: VM1
+        node: VM3
       containers:
         - name: artifacts
           image: hyperledger/fabric-tools:2.5.4
