@@ -94,7 +94,47 @@ mkdir fabric
 
 10. Clone the git repo into master, worker1, worker2, worker3,worker4.
 
-11. Now deploy the nfs storage
+11. After cloning now go inside the worker 1 and copy the prerequisite0 folder to /mnt/fabric path.
+
+VM1
+
+```bash
+cd <repo-name>
+
+cd prerequisite-0
+
+sudo cp -r . /mnt/fabric/
+```
+
+VM2
+```bash
+cd <repo-name>
+
+cd prerequisite-1
+
+sudo cp -r . /mnt/fabric/
+```
+
+
+VM3
+```bash
+cd <repo-name>
+
+cd prerequisite-2
+
+sudo cp -r . /mnt/fabric/
+```
+
+VM4
+```bash
+cd <repo-name>
+
+cd prerequisite-3
+
+sudo cp -r . /mnt/fabric/
+```
+
+12. Now deploy the nfs storage
 
 ```bash
 
@@ -102,4 +142,62 @@ kubectl apply -f 1.nfs/.
 
 ```
 
-12. According to your label change the nodeselector.
+13. According to your label change the nodeselector.
+
+14. After deploying the nfs you can remove the task-pv-pod as it is only for testing
+
+15. Now create the fabric-ca for each org
+
+```bash
+
+kubectl apply -f 2.ca/.
+```
+
+16. Now copy the orderer ca certificates to other vms using the scp command
+
+Syntax of scp
+```bash
+scp -r /path/to/local/directory user@remote_host:/path/to/remote/destination/
+
+To copy the folder from remote machine to your machine
+
+scp -r user@192.168.1.100:/path/to/remote/myfolder /path/to/local/destination/
+
+```
+
+Eg
+
+```bash
+scp -r organizations/fabric-ca/ordererOrg/ root@<ip>:/mnt/fabric/organizations/fabric-ca/
+
+```
+
+17. After copying all the certificates give permission to access these certificates using the chmod command in all the worker nodes which you have copied these certificates
+
+```bash
+
+cd /
+
+cd mnt/fabric
+
+sudo chmod -R 777 organizations/
+
+```
+
+18. Now we have to generate the certificates in order to generate the certifcates we have deploy the jobs. Execute this command
+
+```bash
+
+kubectl apply -f 3.certificates/.
+
+```
+
+19. Now we have to start the ordering service. Here we are also copying the ordering certificates to our nfs server. TO start the ordering service execute this command
+
+```bash
+
+kubectl apply -f 4.orderer/.
+
+```
+
+20. 

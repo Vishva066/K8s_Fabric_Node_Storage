@@ -27,7 +27,7 @@ spec:
       initContainers:
       - name: copy-certificates
         image: busybox  # A lightweight image for copying files
-        command: ['sh', '-c', 'cp -r /organizations/ /fabricbackup/organizations']
+        command: ['sh', '-c', 'cp -r /organizations/* /fabricbackup/organizations']
         volumeMounts:
           - name: fabricfiles
             mountPath: /organizations  # Mount the source (host path)
