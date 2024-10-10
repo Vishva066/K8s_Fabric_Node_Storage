@@ -200,4 +200,11 @@ kubectl apply -f 4.orderer/.
 
 ```
 
-20. 
+20. Now create the config map inside the config map we will be having the configuration of core.yaml and external chaincode scripts. To create the config map use this command.
+
+```bash
+kubectl apply -f 5.configmap/.
+
+```
+
+21. 
