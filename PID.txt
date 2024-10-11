@@ -1,0 +1,7 @@
+Manufacturer -> automobile:3f3e9158301315b2c5b487398b88be2d7ef0f6704af8fb504d604f62eba0f98f
+
+Dealer -> automobile:ecbafb7ff1c531e151f13edee40fe5e7393c27ebc674facbf160a964c0521214
+
+MVD ->
+automobile:f9ea52baffaf1add1e3a9bce37ac497da7ac4d5de244fd0ec37c12f5f9ce9940
+

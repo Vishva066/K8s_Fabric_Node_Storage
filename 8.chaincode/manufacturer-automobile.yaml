@@ -23,7 +23,7 @@ spec:
           name: chaincode-automobile-manufacturer
           env:
             - name: CHAINCODE_ID
-              value: "automobile:694edcc5e2baea977bd03b4987429ba77663f2748cb308b40bc7846a3b3c040d"
+              value: "automobile:3f3e9158301315b2c5b487398b88be2d7ef0f6704af8fb504d604f62eba0f98f"
             - name: CHAINCODE_SERVER_ADDRESS
               value: "0.0.0.0:7052"
           ports:
