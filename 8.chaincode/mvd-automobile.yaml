@@ -17,6 +17,8 @@ spec:
       labels:
         app: chaincode-automobile-mvd
     spec:
+      nodeSelector:
+        node: VM2
       containers:
         - image: abhithshaji/automobile:3.3
           name: chaincode-automobile-mvd

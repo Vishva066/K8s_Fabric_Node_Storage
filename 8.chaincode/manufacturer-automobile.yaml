@@ -17,6 +17,8 @@ spec:
       labels:
         app: chaincode-automobile-manufacturer
     spec:
+      nodeSelector:
+        node: VM2
       containers:
         - image: abhithshaji/automobile:3.3
           imagePullPolicy: Always
