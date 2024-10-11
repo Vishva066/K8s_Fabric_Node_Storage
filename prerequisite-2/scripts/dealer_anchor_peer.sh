@@ -1,5 +1,5 @@
 export CHANNEL_NAME=autochannel
-export ORDERER_CA=/organizations/ordererOrganizations/auto.com/orderers/orderer.auto.com/msp/tlscacerts/tlsca.auto.com-cert.pem
+export ORDERER_CA=/organizations/ordererOrganizations/auto.com/orderers/orderer2.auto.com/msp/tlscacerts/tlsca.auto.com-cert.pem
 
 peer channel fetch config /channel-artifacts/config_block.pb -o orderer:7050 --ordererTLSHostnameOverride orderer.auto.com -c $CHANNEL_NAME --tls --cafile $ORDERER_CA
 sleep 1

@@ -207,4 +207,114 @@ kubectl apply -f 5.configmap/.
 
 ```
 
-21. 
+21. Now start the peers. To start the peers execute this command
+
+```bash
+kubectl apply -f 6.peers/.
+
+```
+
+22. Now we have to create the genesis block. To create the genesis block execute these commands.
+
+```bash
+kubectl apply -f 7.artifacts/job-genesis.yaml
+
+```
+
+Next create the channel and join the orderers to the channel
+
+```bash
+kubectl apply -f 7.artifacts/job-osn.yaml
+
+kubectl apply -f 7.artifacts/job-osn2.yaml
+
+kubectl apply -f 7.artifacts/job-osn3.yaml
+```
+
+23. Now we have to join the peers to channel. For that we have to go inside the peer container and execute the following commands
+
+There are two ways you can enter into a peer container inside a pod 
+
+- Using LENS IDE
+    - Go to LENS IDE in the sidebar there will be a section called workloads in that select the pod section. In that section select the pod of manufacturer and press the shell icon
+- Using CLI
+    - Execute this command 
+
+    ```bash
+    kubectl exec -it <pod-name> -- bash
+    ```
+
+24. Now inside this peer container execute the following script to join the channel
+
+```bash
+./scripts/joinChannel.sh
+```
+
+**Do this for all the peers**
+
+25. Now we have to setup the peer as an anchor peer for that we have to download the binaries. To download the binaries execute this command.
+
+```bash
+apt update
+
+apt install curl -y
+
+curl -V
+
+curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh && chmod +x bootstrap.sh
+
+```
+
+We should also install jq
+
+```bash
+curl -L https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64 -o jq
+
+chmod +x jq
+
+cp jq /usr/local/bin
+
+jq
+```
+
+25. Download the binaries using this command
+
+```bash
+./bootstrap.sh 2.5.4 1.5.7 -s -d
+```
+
+This will install all the binaries.
+
+Now go inside the bin folder and remove the peer binary because it already has the peer binary
+
+```bash
+cd bin
+
+rm peer
+
+```
+
+Now copy the binaries to the usr/local/bin folder to be able to accessible in the full application.
+
+```bash
+cp bin/* /usr/local/bin
+```
+
+26. Set an env variable
+
+```bash
+
+CORE_PEER_MSPCONFIGPATH=/organizations/peerOrganizations/manufacturer.auto.com/users/Admin@manufacturer.auto.com/msp
+
+```
+27. Now execute the script file
+
+```bash
+./scripts/manufacuturer_anchor_update
+```
+
+28. Do the following for other peers also
+
+
+29. 
+

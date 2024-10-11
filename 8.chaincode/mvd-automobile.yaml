@@ -1,0 +1,37 @@
+---
+#---------------- Chaincode Deployment ---------------------
+apiVersion: apps/v1 # for versions before 1.8.0 use apps/v1beta1
+kind: Deployment
+metadata:
+  name: chaincode-automobile-mvd
+  labels:
+    app: chaincode-automobile-mvd
+spec:
+  selector:
+    matchLabels:
+      app: chaincode-automobile-mvd
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: chaincode-automobile-mvd
+    spec:
+      containers:
+        - image: abhithshaji/automobile:3.3
+          name: chaincode-automobile-mvd
+          imagePullPolicy: Always
+          env:
+            - name: CHAINCODE_ID
+              value: "automobile:475649bb88a9c37d709ff03a11a717649b3bcb97da698c246db77f10370dd0b0"
+            - name: CHAINCODE_SERVER_ADDRESS
+              value: "0.0.0.0:7052"
+          ports:
+            - containerPort: 7052
+          resources:
+            limits:
+              memory: "300Mi"
+              cpu: "70m"
+            requests:
+              memory: "200Mi"
+              cpu: "60m"

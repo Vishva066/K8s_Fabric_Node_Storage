@@ -24,9 +24,9 @@ spec:
         - name: certbackup
           persistentVolumeClaim:
             claimName: mypvc
-        # - name: docker-socket
-        #   hostPath:
-        #     path: /var/run/docker.sock
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
         - name: builders-config
           configMap:
             name: builders-config
@@ -116,6 +116,8 @@ spec:
               value: 0.0.0.0:9443
             - name: CORE_METRICS_PROVIDER
               value: prometheus
+            - name: CORE_CHAINCODE_BUILDER
+              value: hyperledger/fabric-ccenv:2.5.4
           ports:    
             - containerPort: 7051
             - containerPort: 7052
@@ -156,8 +158,9 @@ spec:
             - mountPath: /opt/hyperledger/ccaas_builder/bin/release
               name: external-builder-release
               subPath: release
-            # - mountPath: /var/run/docker.sock
-            #   name: docker-socket
+            - mountPath: /var/run/docker.sock
+              name: docker-socket
+            
             
 
         - name: couchdb
