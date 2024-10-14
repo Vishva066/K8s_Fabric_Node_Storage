@@ -316,5 +316,147 @@ CORE_PEER_MSPCONFIGPATH=/organizations/peerOrganizations/manufacturer.auto.com/u
 28. Do the following for other peers also
 
 
-29. 
+29. Now we have to install the chaincode in each peer. Do do that go inside each peer. 
 
+- Manufacturer peer
+
+Set the msp to admin of manufacturer and export the Orderer CA
+
+```bash
+
+CORE_PEER_MSPCONFIGPATH=/organizations/peerOrganizations/manufacturer.auto.com/users/Admin@manufacturer.auto.com/msp
+
+export ORDERER_CA=/organizations/ordererOrganizations/auto.com/orderers/orderer.auto.com/msp/tlscacerts/tlsca.auto.com-cert.pem
+
+```
+
+Now install the chaincode using this command
+
+```bash
+cd /opt/gopath/src/github.com/chaincode/automobile/packaging
+
+peer lifecycle chaincode install automobile-manufacturer.tgz
+```
+
+**Copy the PID and store it somewhere safe**
+
+- Dealer Peer
+
+Set the msp to admin of dealer and specify the orderer ca 
+
+```bash
+CORE_PEER_MSPCONFIGPATH=/organizations/peerOrganizations/dealer.auto.com/users/Admin@dealer.auto.com/msp
+
+export ORDERER_CA=/organizations/ordererOrganizations/auto.com/orderers/orderer2.auto.com/msp/tlscacerts/tlsca.auto.com-cert.pem
+
+```
+
+Now install the chaincode using this command
+
+```bash
+cd /opt/gopath/src/github.com/chaincode/automobile/packaging
+
+peer lifecycle chaincode install automobile-dealer.tgz
+```
+
+**Copy the PID and store it somewhere safe**
+
+- MVD Peer
+
+Set the msp to admin of mvd and specify the orderer ca 
+
+```bash
+
+CORE_PEER_MSPCONFIGPATH=/organizations/peerOrganizations/mvd.auto.com/users/Admin@mvd.auto.com/msp
+
+export ORDERER_CA=/organizations/ordererOrganizations/auto.com/orderers/orderer3.auto.com/msp/tlscacerts/tlsca.auto.com-cert.pem
+```
+
+Now install the chaincode in this peer. Execute this command
+
+```bash
+cd /opt/gopath/src/github.com/chaincode/automobile/packaging
+
+peer lifecycle chaincode install automobile-mvd.tgz
+```
+
+30. Now go to the chaincode files and edit the PIDs of each pod accordingly.
+
+31. Now deploy the chaincode deployment files.
+
+```bash
+kubectl apply -f 8.chaincode/.
+```
+
+32. Approve the chaincode from all the org.
+
+- Manufacturer Peer
+
+Change the PID according to your chaincode
+
+```bash
+peer lifecycle chaincode approveformyorg --channelID autochannel --name automobile --version 1.0 --package-id automobile:3f3e9158301315b2c5b487398b88be2d7ef0f6704af8fb504d604f62eba0f98f --sequence 1 -o orderer:7050 --tls --cafile $ORDERER_CA --collections-config /opt/gopath/src/github.com/chaincode/automobile/collections.json
+```
+
+- Dealer Peer
+
+Change the PID according to your chaincode
+
+```bash
+peer lifecycle chaincode approveformyorg --channelID autochannel --name automobile --version 1.0 --package-id automobile:ecbafb7ff1c531e151f13edee40fe5e7393c27ebc674facbf160a964c0521214 --sequence 1 -o orderer:7050 --tls --cafile $ORDERER_CA --collections-config /opt/gopath/src/github.com/chaincode/automobile/collections.json
+```
+
+- MVD Peer
+
+Change the PID according to your chaincode
+
+```bash
+peer lifecycle chaincode approveformyorg --channelID autochannel --name automobile --version 1.0 --package-id automobile:f9ea52baffaf1add1e3a9bce37ac497da7ac4d5de244fd0ec37c12f5f9ce9940 --sequence 1 -o orderer:7050 --tls --cafile $ORDERER_CA --collections-config /opt/gopath/src/github.com/chaincode/automobile/collections.json
+```
+
+33. Before committing the chaincode we have to copy the tls certificate of all the org to their respective folders.
+
+Now we are creating the folder structure and then copying using the scp command
+
+```bash
+mkdir -p organizations/peerOrganizations/manufacturer.auto.com/peers/peer0.manufacturer.auto.com/tls
+
+mkdir -p organizations/peerOrganizations/dealer.auto.com/peers/peer0.dealer.auto.com/tls
+
+mkdir -p organizations/peerOrganizations/mvd.auto.com/peers/peer0.mvd.auto.com/tls/
+```
+
+```bash
+scp -r organizations/peerOrganizations/manufacturer.auto.com/peers/peer0.manufacturer.auto.com/tls/ca.crt root@<ip>:/mnt/fabric/organizations/peerOrganizations/manufacturer.auto.com/peers/peer0.manufacturer.auto.com/tls
+```
+
+34. To check whether all the org has given approval use this command chaincode execute this command from any one peer
+
+```bash
+peer lifecycle chaincode checkcommitreadiness --channelID autochannel --name automobile --version 1.0 --sequence 1 -o -orderer:7050 --tls --cafile $ORDERER_CA --collections-config /opt/gopath/src/github.com/chaincode/automobile/collections.json
+
+```
+
+35. To commit the chaincode execiute this command from any peer 
+
+```bash
+peer lifecycle chaincode commit -o orderer:7050 --channelID autochannel --name automobile --version 1.0 --sequence 1 --tls true --cafile $ORDERER_CA --peerAddresses peer0-manufacturer:7051 --tlsRootCertFiles /organizations/peerOrganizations/manufacturer.auto.com/peers/peer0.manufacturer.auto.com/tls/ca.crt --peerAddresses peer0-dealer:7051 --tlsRootCertFiles /organizations/peerOrganizations/dealer.auto.com/peers/peer0.dealer.auto.com/tls/ca.crt --peerAddresses peer0-mvd:7051 --tlsRootCertFiles /organizations/peerOrganizations/mvd.auto.com/peers/peer0.mvd.auto.com/tls/ca.crt --collections-config /opt/gopath/src/github.com/chaincode/automobile/collections.json
+```
+
+36. To check whether the chaincode has been committed execute this command:
+
+```bash
+peer lifecycle chaincode querycommitted --channelID autochannel
+```
+
+37. Invoke the chaincode functions to check whether the chaincode works
+
+```bash
+peer chaincode invoke -o orderer:7050 --tls true --cafile $ORDERER_CA -C autochannel -n automobile --peerAddresses peer0-manufacturer:7051 --tlsRootCertFiles /organizations/peerOrganizations/manufacturer.auto.com/peers/peer0.manufacturer.auto.com/tls/ca.crt --peerAddresses peer0-dealer:7051 --tlsRootCertFiles /organizations/peerOrganizations/dealer.auto.com/peers/peer0.dealer.auto.com/tls/ca.crt --peerAddresses peer0-mvd:7051 --tlsRootCertFiles /organizations/peerOrganizations/mvd.auto.com/peers/peer0.mvd.auto.com/tls/ca.crt -c '{"Args":["createCar","car1","Ford","Mustang","Black","12/12/2020","Ford"]}' --waitForEvent
+```
+
+38. To query the chaincode execute this command
+
+```bash
+peer chaincode query -C autochannel -n automobile -c '{"Args":["readCar","car1"]}'
+```
