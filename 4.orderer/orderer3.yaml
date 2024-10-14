@@ -13,7 +13,7 @@ spec:
         name: orderer3
     spec:
       nodeSelector:
-        node: VM5 
+        node: VM4
       volumes:
         - name: fabricfiles
           # persistentVolumeClaim:

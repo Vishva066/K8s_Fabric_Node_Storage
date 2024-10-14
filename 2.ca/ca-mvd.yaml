@@ -13,7 +13,7 @@ spec:
         app: ca-mvd
     spec:
       nodeSelector:
-        node: VM5
+        node: VM4
       volumes:
         - name: data
           # persistentVolumeClaim:

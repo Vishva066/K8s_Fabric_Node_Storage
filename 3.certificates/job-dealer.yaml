@@ -10,7 +10,7 @@ spec:
       name: create-certs-deal
     spec:
       nodeSelector:
-        node: VM4
+        node: VM3
       volumes:
         - name: fabricfiles
           # persistentVolumeClaim:

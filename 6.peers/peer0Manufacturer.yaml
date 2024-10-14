@@ -13,7 +13,7 @@ spec:
         name: peer0-manufacturer
     spec:
       nodeSelector:
-        node: VM3
+        node: VM2
       volumes:
         - name: fabricfiles
           # persistentVolumeClaim:

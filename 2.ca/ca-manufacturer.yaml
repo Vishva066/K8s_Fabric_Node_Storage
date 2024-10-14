@@ -13,7 +13,7 @@ spec:
         app: ca-manufacturer
     spec:
       nodeSelector:
-        node: VM3
+        node: VM2
       volumes:
         - name: data
           # persistentVolumeClaim:
