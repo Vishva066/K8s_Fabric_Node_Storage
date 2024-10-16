@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: automobile-dealer
+  name: bel-dealer
   labels:
-    app: automobile-dealer
+    app: bel-dealer
 spec:
   ports:
     - name: grpc
       port: 7052
       targetPort: 7052
   selector:
-    app: chaincode-automobile-dealer
+    app: chaincode-bel-dealer

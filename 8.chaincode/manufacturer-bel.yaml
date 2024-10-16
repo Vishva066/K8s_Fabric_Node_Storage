@@ -3,26 +3,26 @@
 apiVersion: apps/v1 # for versions before 1.8.0 use apps/v1beta1
 kind: Deployment
 metadata:
-  name: chaincode-automobile-manufacturer
+  name: chaincode-bel-manufacturer
   labels:
-    app: chaincode-automobile-manufacturer
+    app: chaincode-bel-manufacturer
 spec:
   selector:
     matchLabels:
-      app: chaincode-automobile-manufacturer
+      app: chaincode-bel-manufacturer
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: chaincode-automobile-manufacturer
+        app: chaincode-bel-manufacturer
     spec:
       nodeSelector:
         node: VM2
       containers:
         - image: abhithshaji/automobile:3.3
           imagePullPolicy: Always
-          name: chaincode-automobile-manufacturer
+          name: chaincode-bel-manufacturer
           env:
             - name: CHAINCODE_ID
               value: "automobile:3f3e9158301315b2c5b487398b88be2d7ef0f6704af8fb504d604f62eba0f98f"

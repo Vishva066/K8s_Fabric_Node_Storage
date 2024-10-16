@@ -168,7 +168,9 @@ scp -r user@192.168.1.100:/path/to/remote/myfolder /path/to/local/destination/
 Eg
 
 ```bash
-scp -r organizations/fabric-ca/ordererOrg/ root@<ip>:/mnt/fabric/organizations/fabric-ca/
+scp -r organizations/fabric-ca/ordererOrg/ca-cert.pem root@<ip>:/mnt/fabric/organizations/fabric-ca/ordererOrg/
+
+scp  organizations/fabric-ca/ordererOrg/tls-cert.pem root@<ip>:/mnt/fabric/organizations/fabric-ca/ordererOrg/
 
 ```
 
@@ -310,7 +312,7 @@ CORE_PEER_MSPCONFIGPATH=/organizations/peerOrganizations/manufacturer.auto.com/u
 27. Now execute the script file
 
 ```bash
-./scripts/manufacuturer_anchor_update
+./scripts/manufacuturer_anchor_update.sh
 ```
 
 28. Do the following for other peers also

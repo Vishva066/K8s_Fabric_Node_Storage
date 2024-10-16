@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: automobile-manufacturer
+  name: bel-manufacturer
   labels:
-    app: automobile-manufacturer
+    app: bel-manufacturer
 spec:
   ports:
     - name: grpc
       port: 7052
       targetPort: 7052
   selector:
-    app: chaincode-automobile-manufacturer
+    app: chaincode-bel-manufacturer

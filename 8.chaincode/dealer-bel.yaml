@@ -3,29 +3,29 @@
 apiVersion: apps/v1 # for versions before 1.8.0 use apps/v1beta1
 kind: Deployment
 metadata:
-  name: chaincode-automobile-mvd
+  name: chaincode-bel-dealer
   labels:
-    app: chaincode-automobile-mvd
+    app: chaincode-bel-dealer
 spec:
   selector:
     matchLabels:
-      app: chaincode-automobile-mvd
+      app: chaincode-bel-dealer
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: chaincode-automobile-mvd
+        app: chaincode-bel-dealer
     spec:
       nodeSelector:
         node: VM2
       containers:
         - image: abhithshaji/automobile:3.3
-          name: chaincode-automobile-mvd
+          name: chaincode-bel-dealer
           imagePullPolicy: Always
           env:
             - name: CHAINCODE_ID
-              value: "automobile:f9ea52baffaf1add1e3a9bce37ac497da7ac4d5de244fd0ec37c12f5f9ce9940"
+              value: "automobile:ecbafb7ff1c531e151f13edee40fe5e7393c27ebc674facbf160a964c0521214"
             - name: CHAINCODE_SERVER_ADDRESS
               value: "0.0.0.0:7052"
           ports:
