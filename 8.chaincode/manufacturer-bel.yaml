@@ -20,12 +20,12 @@ spec:
       nodeSelector:
         node: VM2
       containers:
-        - image: abhithshaji/automobile:3.3
+        - image: vishva8/chaincode-ipfs:1.0
           imagePullPolicy: Always
           name: chaincode-bel-manufacturer
           env:
             - name: CHAINCODE_ID
-              value: "automobile:3f3e9158301315b2c5b487398b88be2d7ef0f6704af8fb504d604f62eba0f98f"
+              value: "bel:e879c5ef112b5e82421e962eb360823e83fa2872ce3cadfa9c2280c3608584ca"
             - name: CHAINCODE_SERVER_ADDRESS
               value: "0.0.0.0:7052"
           ports:

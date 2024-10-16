@@ -1,9 +1,9 @@
-Manufacturer -> automobile:3f3e9158301315b2c5b487398b88be2d7ef0f6704af8fb504d604f62eba0f98f
+Manufacturer -> bel:e879c5ef112b5e82421e962eb360823e83fa2872ce3cadfa9c2280c3608584ca
 
-Dealer -> automobile:ecbafb7ff1c531e151f13edee40fe5e7393c27ebc674facbf160a964c0521214
+Dealer -> bel:314831f70f67e1f6068c696c95a8cb0bf84d7658f2830695b140d90676c2e4a0
 
 MVD ->
-automobile:f9ea52baffaf1add1e3a9bce37ac497da7ac4d5de244fd0ec37c12f5f9ce9940
+bel:255edeca04667a456c48d7c3f7ab2ac44d07f007c278fd3ed2fd9e41b257b2e4
 
 peer lifecycle chaincode approveformyorg --channelID autochannel --name automobile --version 1.0 --package-id automobile:3f3e9158301315b2c5b487398b88be2d7ef0f6704af8fb504d604f62eba0f98f --sequence 1 -o orderer:7050 --tls --cafile $ORDERER_CA --collections-config /opt/gopath/src/github.com/chaincode/automobile/collections.json
 
