@@ -18,6 +18,9 @@ spec:
   - name: busybox-container
     image: busybox
     command: ["sleep", "3600"]
+    volumeMounts: 
+    - name: ipfs-data
+      mountPath: /data/ipfs
     resources:
       limits:
         memory: "64Mi"
