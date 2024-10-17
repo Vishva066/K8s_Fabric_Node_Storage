@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: ipfs-cluster-1
+  name: ipfs-cluster-2
 spec:
   serviceName: ipfs-cluster
   replicas: 1
@@ -14,7 +14,7 @@ spec:
         app: ipfs-cluster
     spec:
       nodeSelector:
-        node: VM2
+        node: VM4
       volumes:
         - name: ipfs-data
           # persistentVolumeClaim:
@@ -52,7 +52,7 @@ spec:
             - name: SVC_NAME
               value: ipfs-cluster
           volumeMounts: 
-            - name: ipfs-storage
+            - name: ipfs-data
               mountPath: /data/ipfs
             - name: configure-script
               mountPath: /custom
@@ -99,7 +99,7 @@ spec:
               containerPort: 8080
           volumeMounts:
             - mountPath: /data/ipfs
-              name: ipfs-storage
+              name: ipfs-data
             - name: configure-script
               mountPath: /custom
             # - name: swarmkey-file
@@ -145,7 +145,7 @@ spec:
               containerPort: 9096
               protocol: TCP
           volumeMounts:
-            - name: cluster-storage
+            - name: ipfs-cluster-data
               mountPath: /data/ipfs-cluster
             - name: configure-script
               mountPath: /custom

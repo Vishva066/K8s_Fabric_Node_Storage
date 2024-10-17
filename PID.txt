@@ -5,12 +5,15 @@ Dealer -> bel:314831f70f67e1f6068c696c95a8cb0bf84d7658f2830695b140d90676c2e4a0
 MVD ->
 bel:255edeca04667a456c48d7c3f7ab2ac44d07f007c278fd3ed2fd9e41b257b2e4
 
-peer lifecycle chaincode approveformyorg --channelID autochannel --name automobile --version 1.0 --package-id automobile:3f3e9158301315b2c5b487398b88be2d7ef0f6704af8fb504d604f62eba0f98f --sequence 1 -o orderer:7050 --tls --cafile $ORDERER_CA --collections-config /opt/gopath/src/github.com/chaincode/automobile/collections.json
+peer lifecycle chaincode approveformyorg --channelID autochannel --name bel --version 1.0 --package-id bel:e879c5ef112b5e82421e962eb360823e83fa2872ce3cadfa9c2280c3608584ca --sequence 1 -o orderer:7050 --tls --cafile $ORDERER_CA 
 
-peer lifecycle chaincode approveformyorg --channelID autochannel --name automobile --version 1.0 --package-id automobile:ecbafb7ff1c531e151f13edee40fe5e7393c27ebc674facbf160a964c0521214 --sequence 1 -o orderer:7050 --tls --cafile $ORDERER_CA --collections-config /opt/gopath/src/github.com/chaincode/automobile/collections.json
+peer lifecycle chaincode approveformyorg --channelID autochannel --name bel --version 1.0 --package-id bel:314831f70f67e1f6068c696c95a8cb0bf84d7658f2830695b140d90676c2e4a0 --sequence 1 -o orderer:7050 --tls --cafile $ORDERER_CA 
 
-peer lifecycle chaincode approveformyorg --channelID autochannel --name automobile --version 1.0 --package-id automobile:f9ea52baffaf1add1e3a9bce37ac497da7ac4d5de244fd0ec37c12f5f9ce9940 --sequence 1 -o orderer:7050 --tls --cafile $ORDERER_CA --collections-config /opt/gopath/src/github.com/chaincode/automobile/collections.json
+peer lifecycle chaincode approveformyorg --channelID autochannel --name bel --version 1.0 --package-id bel:255edeca04667a456c48d7c3f7ab2ac44d07f007c278fd3ed2fd9e41b257b2e4 --sequence 1 -o orderer:7050 --tls --cafile $ORDERER_CA 
 
+peer chaincode invoke -o orderer:7050 --tls true --cafile $ORDERER_CA -C autochannel -n bel --peerAddresses peer0-manufacturer:7051 --tlsRootCertFiles /organizations/peerOrganizations/manufacturer.auto.com/peers/peer0.manufacturer.auto.com/tls/ca.crt --peerAddresses peer0-dealer:7051 --tlsRootCertFiles /organizations/peerOrganizations/dealer.auto.com/peers/peer0.dealer.auto.com/tls/ca.crt --peerAddresses peer0-mvd:7051 --tlsRootCertFiles /organizations/peerOrganizations/mvd.auto.com/peers/peer0.mvd.auto.com/tls/ca.crt -c '{"Args":["CreateFile","file-223","xyz-uuid","aaa-cid","file1.pdf","sender-1","time-1"]}' 
 
-
-
+Swarm key ->
+/key/swarm/psk/1.0.0/
+/base16/
+964b1f90fc43a481dbe67375b3f3c32fb596a82b254addf8ea6e7ab2313c9157
