@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: env-config
+data:
+  bootstrap-cluster-id: 12D3KooWPjms7vWFvwCY8YcsvqAPjXYEV77YBVTZRcY4ub6TZXAZ
+  bootstrap-peer-id: 12D3KooWRKVNNiwNnXwsuxf7WkLFTumGRS7HcKBvsnyUCYGYQu7H 

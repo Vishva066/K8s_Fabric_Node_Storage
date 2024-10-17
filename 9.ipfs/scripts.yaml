@@ -1,0 +1,103 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ipfs-cluster-set-bootstrap-conf
+data:
+  entrypoint.sh: |
+    #!/bin/sh
+    user=ipfs
+
+    # This is a custom entrypoint for k8s designed to connect to the bootstrap
+    # node running in the cluster. It has been set up using a configmap to
+    # allow changes on the fly.
+
+
+    if [ ! -f /data/ipfs-cluster/service.json ]; then
+      ipfs-cluster-service init
+    fi
+
+    PEER_HOSTNAME=`cat /proc/sys/kernel/hostname`
+
+    sed -i s~/ip4/127.0.0.1/tcp/9095~/ip4/0.0.0.0/tcp/9095~ /data/ipfs-cluster/service.json
+    sed -i s~/ip4/127.0.0.1/tcp/9094~/ip4/0.0.0.0/tcp/9094~ /data/ipfs-cluster/service.json
+    # ipfs-cluster-service config api.pinsvcapi.http_listen_multiaddress 
+
+
+
+    grep -q ".*ipfs-cluster-0.*" /proc/sys/kernel/hostname
+    if [ $? -eq 0 ]; then
+      CLUSTER_ID=${BOOTSTRAP_CLUSTER_ID} \
+      CLUSTER_PRIVATEKEY=${BOOTSTRAP_CLUSTER_PRIV_KEY} \
+      exec ipfs-cluster-service daemon --upgrade
+    else
+      BOOTSTRAP_ADDR=/dns4/${SVC_NAME}-0.${SVC_NAME}/tcp/9096/ipfs/${BOOTSTRAP_CLUSTER_ID}
+
+      # echo "/dns4/${SVC_NAME}-0/tcp/9096/ipfs/${BOOTSTRAP_CLUSTER_ID}" >> /data/ipfs-cluster/peerstore
+      # exec ipfs-cluster-service daemon
+
+      if [ -z $BOOTSTRAP_ADDR ]; then
+        exit 1
+      fi
+      # Only ipfs user can get here
+      exec ipfs-cluster-service daemon --upgrade --bootstrap $BOOTSTRAP_ADDR --leave
+    fi
+
+  configure-ipfs.sh: |
+    #!/bin/sh
+    set -e
+    set -x
+    # This is a custom entrypoint for k8s designed to run ipfs nodes in an appropriate
+    # setup for production scenarios.
+
+    user=root
+    mkdir -p /data/ipfs 
+    
+    chown -R ipfs /data/ipfs
+
+    user=ipfs
+    if [ -f /data/ipfs/config ]; then
+      if [ -f /data/ipfs/repo.lock ]; then
+        rm /data/ipfs/repo.lock
+      fi
+      exit 0
+    fi
+
+    ipfs init --profile=badgerds,server
+
+    cat <<EOF > swarm.key
+    $IPFS_SWARM_KEY
+    EOF
+
+    cp swarm.key /data/ipfs
+
+    PEER_HOSTNAME=`cat /proc/sys/kernel/hostname`
+
+    ipfs bootstrap rm --all
+
+    ipfs bootstrap add /dns4/${SVC_NAME}-0.${SVC_NAME}/tcp/4001/ipfs/${BOOTSTRAP_PEER_ID}
+
+    export LIBP2P_FORCE_PNET=1
+
+    ipfs config --json Swarm.AddrFilters '[]'
+
+    ipfs config Routing.Type dht
+    ipfs config --json Swarm.EnableAutoNATService true
+    ipfs config --json Swarm.DisableNatPortMap false
+    ipfs config --json Swarm.RelayClient.Enabled true
+    ipfs config --json Swarm.EnableHolePunching true
+    ipfs config --json Swarm.EnableAutoRelay true
+    ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001
+    ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/8080
+    ipfs config --json Swarm.ConnMgr.HighWater 2000
+    ipfs config --json Datastore.BloomFilterSize 1048576
+    ipfs config Datastore.StorageMax 100GB
+
+    # grep -q ".*ipfs-cluster-0.*" /proc/sys/kernel/hostname
+    # if [ $? -eq 0 ]; then
+    if [ "$PEER_HOSTNAME" = "ipfs-cluster-0" ]; then
+      ipfs config Identity.PeerID ${BOOTSTRAP_PEER_ID}
+      sed -i "s~\"PrivKey\":.*~\"PrivKey\": \"$BOOTSTRAP_PEER_PRIV_KEY\"~" /data/ipfs/config
+      # echo $BOOTSTRAP_PEER_PRIV_KEY
+    else
+      exit 0
+    fi
