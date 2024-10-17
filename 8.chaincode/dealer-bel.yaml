@@ -20,7 +20,7 @@ spec:
       nodeSelector:
         node: VM3
       containers:
-        - image: vishva8/chaincode-ipfs:2.0
+        - image: vishva8/chaincode-ipfs:3.0
           name: chaincode-bel-dealer
           imagePullPolicy: Always
           env:
