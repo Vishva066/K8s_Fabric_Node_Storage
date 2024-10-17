@@ -18,7 +18,7 @@ spec:
         app: chaincode-bel-dealer
     spec:
       nodeSelector:
-        node: VM2
+        node: VM3
       containers:
         - image: vishva8/chaincode-ipfs:2.0
           name: chaincode-bel-dealer

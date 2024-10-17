@@ -18,7 +18,7 @@ spec:
         app: chaincode-bel-mvd
     spec:
       nodeSelector:
-        node: VM2
+        node: VM4
       containers:
         - image: vishva8/chaincode-ipfs:2.0
           name: chaincode-bel-mvd
