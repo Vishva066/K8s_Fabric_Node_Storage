@@ -5,6 +5,15 @@ metadata:
   labels:
     app: busybox-sleep
 spec:
+  nodeSelector:
+    node: VM2
+  volumes:
+    - name: ipfs-data
+          # persistentVolumeClaim:
+          #   claimName: mypvc
+      hostPath:
+        path: /ipfs  # Path on the node's local filesystem
+        type: DirectoryOrCreate
   containers:
   - name: busybox-container
     image: busybox
