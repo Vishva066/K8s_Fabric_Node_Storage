@@ -24,12 +24,11 @@ spec:
           imagePullPolicy: Always
           name: chaincode-bel-manufacturer
           env:
-            - name: CHAINCODE_ID
+            - name: CORE_CHAINCODE_ID_NAME
               value: "bel:e879c5ef112b5e82421e962eb360823e83fa2872ce3cadfa9c2280c3608584ca"
             - name: CHAINCODE_SERVER_ADDRESS
               value: "0.0.0.0:7052"
-            - name: CORE_CHAINCODE_ID_NAME
-              value: bel:1.0
+
           ports:
             - containerPort: 7052
           resources:
