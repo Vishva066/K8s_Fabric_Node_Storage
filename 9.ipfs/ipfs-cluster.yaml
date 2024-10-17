@@ -20,7 +20,7 @@ spec:
           # persistentVolumeClaim:
           #   claimName: mypvc
           hostPath:
-            path: /ipfs  # Path on the node's local filesystem
+            path: /ipfs-boot  # Path on the node's local filesystem
             type: DirectoryOrCreate
         - name: ipfs-cluster-data
           hostPath:
