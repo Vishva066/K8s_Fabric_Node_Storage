@@ -28,6 +28,8 @@ spec:
               value: "bel:314831f70f67e1f6068c696c95a8cb0bf84d7658f2830695b140d90676c2e4a0"
             - name: CHAINCODE_SERVER_ADDRESS
               value: "0.0.0.0:7052"
+            - name: CORE_CHAINCODE_ID_NAME
+              value: bel
           ports:
             - containerPort: 7052
           resources:
