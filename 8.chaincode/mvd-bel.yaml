@@ -20,7 +20,7 @@ spec:
       nodeSelector:
         node: VM2
       containers:
-        - image: vishva8/chaincode-ipfs:1.0
+        - image: vishva8/chaincode-ipfs:2.0
           name: chaincode-bel-mvd
           imagePullPolicy: Always
           env:
