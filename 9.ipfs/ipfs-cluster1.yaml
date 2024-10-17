@@ -14,7 +14,7 @@ spec:
         app: ipfs-cluster
     spec:
       nodeSelector:
-        node: VM3
+        node: VM2
       volumes:
         - name: ipfs-data
           # persistentVolumeClaim:
