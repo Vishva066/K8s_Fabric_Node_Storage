@@ -55,6 +55,7 @@ data:
     chown -R ipfs /data/ipfs
 
     user=ipfs
+
     if [ -f /data/ipfs/config ]; then
       if [ -f /data/ipfs/repo.lock ]; then
         rm /data/ipfs/repo.lock
@@ -97,6 +98,7 @@ data:
     if [ "$PEER_HOSTNAME" = "ipfs-cluster-0-0" ]; then
       ipfs config Identity.PeerID ${BOOTSTRAP_PEER_ID}
       sed -i "s~\"PrivKey\":.*~\"PrivKey\": \"$BOOTSTRAP_PEER_PRIV_KEY\"~" /data/ipfs/config
+      exit 0
       # echo $BOOTSTRAP_PEER_PRIV_KEY
     else
       exit 0
