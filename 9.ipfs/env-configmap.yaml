@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: env-config
 data:
-  bootstrap-cluster-id: 12D3KooWPjms7vWFvwCY8YcsvqAPjXYEV77YBVTZRcY4ub6TZXAZ
+  bootstrap-cluster-id: 12D3KooWDstS9k19P9eb2YzkyGtJ3zetJLh7pHeKMkpEhXM3FPaM
   bootstrap-peer-id: 12D3KooWRKVNNiwNnXwsuxf7WkLFTumGRS7HcKBvsnyUCYGYQu7H 
