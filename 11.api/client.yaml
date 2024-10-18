@@ -60,7 +60,7 @@ spec:
             - name: ORG1_MSP_ID
               value: ManufacturerMSP
           volumeMounts:
-            - name: data
+            - name: fabricfiles
               mountPath: /organizations
               subPath: organizations
 
