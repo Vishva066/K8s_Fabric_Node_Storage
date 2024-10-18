@@ -44,7 +44,7 @@ spec:
             - name: IPFS_BASE_URL
               value: 10.233.3.197:8080
             - name: MONGO_URI
-              value: mongodb://mongo.default.svc.cluster.local:27017/
+              value: mongodb://10.233.60.177:27017/
             - name: ORG1_CRYPTO_PATH
               value: /organizations/peerOrganizations/manufacturer.auto.com
             - name: ORG1_KEY_DICTONARY_PATH
