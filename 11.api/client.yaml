@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: clientApp
+  name: clientapp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: clientApp
+      name: clientapp
   template:
     metadata:
       labels:
-        name: clientApp
+        name: clientapp
     spec:
       nodeSelector:
         node: VM2
@@ -22,7 +22,7 @@ spec:
             path: /mnt/fabric  # Path on the node's local filesystem
             type: DirectoryOrCreate
       containers:
-        - name: clientApp
+        - name: clientapp
           stdin: true
           tty: true
           resources:
@@ -69,8 +69,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: clientApp
-  name: clientApp-service
+    app: clientapp
+  name: clientapp-service
 spec:
   type: ClusterIP
   ports:
@@ -78,4 +78,4 @@ spec:
     protocol: TCP
     targetPort: 3000
   selector:
-    name: clientApp
+    name: clientapp
