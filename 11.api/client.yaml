@@ -69,8 +69,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: autoapp
-  name: autoapp
+    app: clientApp
+  name: clientApp-service
 spec:
   type: ClusterIP
   ports:
@@ -78,4 +78,4 @@ spec:
     protocol: TCP
     targetPort: 3000
   selector:
-    name: autoapp
+    name: clientApp
