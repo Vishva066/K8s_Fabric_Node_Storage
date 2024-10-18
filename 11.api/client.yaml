@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clientApp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: clientApp
+  template:
+    metadata:
+      labels:
+        name: clientApp
+    spec:
+      nodeSelector:
+        node: VM2
+      volumes:
+        - name: fabricfiles
+          # persistentVolumeClaim:
+          #   claimName: mypvc
+          hostPath:
+            path: /mnt/fabric  # Path on the node's local filesystem
+            type: DirectoryOrCreate
+      containers:
+        - name: clientApp
+          stdin: true
+          tty: true
+          resources:
+            limits:
+              memory: "450Mi"
+              cpu: "400m"
+            requests:
+              memory: "400Mi"
+              cpu: "300m"
+          image: vishva8/bel-client:2.0
+          imagePullPolicy: Always
+          env:
+            - name: NODE_ENV
+              value: development
+            - name: PORT
+              value: "3000"
+            - name: IPFS_CLUSTER_BASE_URL
+              value: 10.233.3.197:9094
+            - name: IPFS_BASE_URL
+              value: 10.233.3.197:8080
+            - name: MONGO_URI
+              value: mongodb://mongo.default.svc.cluster.local:27017/
+            - name: ORG1_CRYPTO_PATH
+              value: /organizations/peerOrganizations/manufacturer.auto.com
+            - name: ORG1_KEY_DICTONARY_PATH
+              value: /organizations/peerOrganizations/manufacturer.auto.com/users/User1@manufacturer.auto.com/msp/keystore
+            - name: ORG1_CERT_PATH
+              value: /organizations/peerOrganizations/manufacturer.auto.com/users/User1@manufacturer.auto.com/msp/signcerts/cert.pem
+            - name: ORG1_TLS_CERT_PATH
+              value: /organizations/peerOrganizations/manufacturer.auto.com/peers/peer0.manufacturer.auto.com/tls/ca.crt
+            - name: ORG1_PEER_ENDPOINT
+              value: peer0-manufacturer:7051
+            - name: ORG1_PEER_HOST_ALIAS
+              value: peer0.manufacturer.auto.com
+            - name: ORG1_MSP_ID
+              value: ManufacturerMSP
+          volumeMounts:
+            - name: data
+              mountPath: /organizations
+              subPath: organizations
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: autoapp
+  name: autoapp
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    name: autoapp
