@@ -78,7 +78,7 @@ metadata:
     app: clientapp
   name: clientapp-service
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
   - port: 3000
     protocol: TCP
