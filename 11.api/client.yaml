@@ -59,6 +59,8 @@ spec:
               value: peer0.manufacturer.auto.com
             - name: ORG1_MSP_ID
               value: ManufacturerMSP
+            - name: JWT_SECRET
+              value: secret
           volumeMounts:
             - name: fabricfiles
               mountPath: /organizations
