@@ -6,21 +6,11 @@ metadata:
     app: busybox-sleep
 spec:
   nodeSelector:
-    node: VM2
-  volumes:
-    - name: ipfs-data
-          # persistentVolumeClaim:
-          #   claimName: mypvc
-      hostPath:
-        path: /ipfs  # Path on the node's local filesystem
-        type: DirectoryOrCreate
+    node: VM3
   containers:
   - name: busybox-container
     image: busybox
     command: ["sleep", "3600"]
-    volumeMounts: 
-    - name: ipfs-data
-      mountPath: /data/ipfs
     resources:
       limits:
         memory: "64Mi"
