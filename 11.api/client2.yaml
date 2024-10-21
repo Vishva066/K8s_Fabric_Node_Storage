@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: clientapp-2
+spec:
+  serviceName: clientapp-service-2
+  replicas: 1
+  selector:
+    matchLabels:
+      name: clientapp-2
+  template:
+    metadata:
+      labels:
+        name: clientapp-2
+    spec:
+      nodeSelector:
+        node: VM3
+      volumes:
+        - name: fabricfiles
+          # persistentVolumeClaim:
+          #   claimName: mypvc
+          hostPath:
+            path: /mnt/fabric  # Path on the node's local filesystem
+            type: DirectoryOrCreate
+      containers:
+        - name: clientapp
+          stdin: true
+          tty: true
+          resources:
+            limits:
+              memory: "450Mi"
+              cpu: "400m"
+            requests:
+              memory: "400Mi"
+              cpu: "300m"
+          image: vishva8/bel-client:4.0
+          imagePullPolicy: Always
+          env:
+            - name: NODE_ENV
+              value: development
+            - name: PORT
+              value: "3000"
+            - name: IPFS_CLUSTER_BASE_URL
+              value: http://10.233.3.197:9094
+            - name: IPFS_BASE_URL
+              value: http://10.233.3.197:8080
+            - name: MONGO_URI
+              value: mongodb://10.233.60.177:27017/
+            - name: ORG2_CRYPTO_PATH
+              value: /organizations/peerOrganizations/dealer.auto.com
+            - name: ORG2_KEY_DICTONARY_PATH
+              value: /organizations/peerOrganizations/dealer.auto.com/users/User1@dealer.auto.com/msp/keystore
+            - name: ORG2_CERT_PATH
+              value: /organizations/peerOrganizations/dealer.auto.com/users/User1@dealer.auto.com/msp/signcerts/cert.pem
+            - name: ORG2_TLS_CERT_PATH
+              value: /organizations/peerOrganizations/dealer.auto.com/peers/peer0.dealer.auto.com/tls/ca.crt
+            - name: ORG2_PEER_ENDPOINT
+              value: peer0-dealer:7051
+            - name: ORG2_PEER_HOST_ALIAS
+              value: peer0.dealer.auto.com
+            - name: ORG2_MSP_ID
+              value: DealerMSP
+            - name: JWT_SECRET
+              value: secret
+            - name: FABRIC_CHANNEL_NAME
+              value: autochannel
+            - name: FABRIC_CHAINCODE_NAME
+              value: bel
+          volumeMounts:
+            - name: fabricfiles
+              mountPath: /organizations
+              subPath: organizations
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: clientapp-2
+  name: clientapp-service-2
+spec:
+  type: NodePort
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    name: clientapp-2
