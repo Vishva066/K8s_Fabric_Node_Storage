@@ -40,9 +40,9 @@ spec:
             - name: PORT
               value: "3000"
             - name: IPFS_CLUSTER_BASE_URL
-              value: 10.233.3.197:9094
+              value: http://10.233.3.197:9094
             - name: IPFS_BASE_URL
-              value: 10.233.3.197:8080
+              value: http://10.233.3.197:8080
             - name: MONGO_URI
               value: mongodb://10.233.60.177:27017/
             - name: ORG1_CRYPTO_PATH
